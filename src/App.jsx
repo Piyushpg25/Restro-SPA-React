@@ -1,10 +1,10 @@
 import './App.css'
 import { Sidebar } from './components/Sidebar'
-import {Navbar} from './components/Navbar';
+
 import { Menu } from './pages/Menu';
 
 function App() {
-
+  
 
   return (
     <div className="App">
@@ -14,7 +14,7 @@ function App() {
       </div>
 
       <div className='main-content'>
-        <Navbar />
+        
         <Menu />
       </div>
 
