@@ -1,7 +1,7 @@
 import { products } from '../data/product'
 import { ProductCard } from './ProductCard'
 
-export const ProductList = ({ searchTerm,selectedCategory }) => {
+export const ProductList = ({ searchTerm, selectedCategory, onAddCart }) => {
 
     const filteredProducts = selectedCategory === "All" ? products : products.filter((product) => product.category === selectedCategory)
 
@@ -13,11 +13,14 @@ export const ProductList = ({ searchTerm,selectedCategory }) => {
             {/* {searchFilteredProducts.map((product) => (
                 <ProductCard product={product} key={product.id}></ProductCard>
             ))} */}
-            {searchFilteredProducts.length > 0 ? (
+            
+            <div className="product-grid">
+                {searchFilteredProducts.length > 0 ? (
                 searchFilteredProducts.map((product) => (
-                    <ProductCard product={product} key={product.id}></ProductCard>
+                    <ProductCard product={product} onAddCart={onAddCart} key={product.id}></ProductCard>
                 ))
-            ) : <p>No Products Found</p>}
+            ) : <p className='no-products'>No Products Found</p>}
+            </div>
         </div>
     )
 }

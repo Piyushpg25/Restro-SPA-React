@@ -1,13 +1,13 @@
-export const ProductCard = ({ product }) => {
+export const ProductCard = ({ product, onAddCart }) => {
     return (
         <div>
-            <div>
+            <div className="product-card">
                 <p>
                     {product.name} - {product.price}
                 </p>
                 <img src={product.image} alt={product.name} />
 
-                <button>
+                <button onClick={() => onAddCart(product)}>
                     Add
                 </button>
             </div>
