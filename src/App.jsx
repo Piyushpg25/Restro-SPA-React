@@ -1,4 +1,5 @@
 import './App.css'
+import { OrderPanel } from './components/OrderPanel';
 import { Sidebar } from './components/Sidebar'
 
 import { Menu } from './pages/Menu';
@@ -19,7 +20,7 @@ function App() {
       </div>
 
       <div className='order-panel'>
-        <h1>Order-panel</h1>
+        <OrderPanel />
       </div>
     </div>
   )
