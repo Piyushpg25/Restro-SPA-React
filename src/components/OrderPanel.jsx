@@ -1,4 +1,4 @@
-export const OrderPanel = ({ cart, onUpdateQuantity, onRemoveCart, orderType }) => {
+export const OrderPanel = ({ cart, onUpdateQuantity, onRemoveCart, orderType, customerName, customerPhone }) => {
 
     const subtotal = cart?.reduce(
         (total, item) => total + item.price * item.qty, 0
@@ -24,6 +24,9 @@ export const OrderPanel = ({ cart, onUpdateQuantity, onRemoveCart, orderType }) 
             <div className="order-header">
                 <h2>Current Order</h2>
                 <p>Order Type : {orderType}</p>
+
+                <p>Customer: {customerName === "" ? "Not Provided" : customerName}</p>
+                <p>Phone: {customerPhone === "" ? "Not Provided" : customerPhone}</p>
                 <span>{totalItems} Items</span>
             </div>
 

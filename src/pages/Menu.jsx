@@ -9,6 +9,8 @@ export const Menu = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [cart, setCart] = useState([])
   const [orderType, setOrderType] = useState("Dine In")
+  const [customerName, setCustomerName] = useState("")
+  const [customerPhone, setCustomerPhone] = useState("")
 
   const handleAddToCart = (product) => {
     setCart((previousCart) => {
@@ -58,6 +60,12 @@ export const Menu = () => {
           setSearchTerm={setSearchTerm}
         />
 
+        <div className="customer-info">
+          <input type="text" placeholder='Enter customer name' name='name' value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
+
+          <input type="tel" placeholder='Enter Phone Number' name='phone' value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} />
+        </div>
+
         <div className="order-type-selector">
           <button className={orderType === 'Dine In' ? "active" : ""} onClick={() => setOrderType("Dine In")}>Dine In</button>
           <button className={orderType === 'Takeout' ? "active" : ""} onClick={() => setOrderType("Takeout")}>Takeout</button>
@@ -83,6 +91,8 @@ export const Menu = () => {
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveCart={handleRemoveCart}
         orderType={orderType}
+        customerName={customerName}
+        customerPhone={customerPhone}
       />
     </div>
   )
