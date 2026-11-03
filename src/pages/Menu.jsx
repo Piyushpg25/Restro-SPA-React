@@ -8,6 +8,7 @@ export const Menu = () => {
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [searchTerm, setSearchTerm] = useState("")
   const [cart, setCart] = useState([])
+  const [orderType, setOrderType] = useState("Dine In")
 
   const handleAddToCart = (product) => {
     setCart((previousCart) => {
@@ -29,7 +30,7 @@ export const Menu = () => {
   const handleRemoveCart = (productId) => {
     setCart((previousCart) => {
       return previousCart.filter((item) => item.id !== productId)
-    }) 
+    })
   }
 
   const handleUpdateQuantity = (productId, action) => {
@@ -50,16 +51,39 @@ export const Menu = () => {
     )
   }
   return (
-    <div>
-      <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+    <div className="menu-layout">
+      <div className="menu-main">
+        <Navbar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+        />
 
-      <h1 style={{ margin: '20px' }}>Our Menu</h1>
+        <div className="order-type-selector">
+          <button className={orderType === 'Dine In' ? "active" : ""} onClick={() => setOrderType("Dine In")}>Dine In</button>
+          <button className={orderType === 'Takeout' ? "active" : ""} onClick={() => setOrderType("Takeout")}>Takeout</button>
+          <button className={orderType === 'Curbside' ? "active" : ""} onClick={() => setOrderType("Curbside")}>Curbside</button>
+        </div>
 
-      <CategoryList selectedCategory={selectedCategory} setSelectedCategory={(category) => setSelectedCategory(category.trim())} />
+        <h1>Our Menu</h1>
 
-      <ProductList searchTerm={searchTerm} selectedCategory={selectedCategory} onAddCart={handleAddToCart} />
+        <CategoryList
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
 
-      <OrderPanel cart={cart} onUpdateQuantity={handleUpdateQuantity} onRemoveCart={handleRemoveCart} />
+        <ProductList
+          searchTerm={searchTerm}
+          selectedCategory={selectedCategory}
+          onAddCart={handleAddToCart}
+        />
+      </div>
+
+      <OrderPanel
+        cart={cart}
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemoveCart={handleRemoveCart}
+        orderType={orderType}
+      />
     </div>
   )
 }
