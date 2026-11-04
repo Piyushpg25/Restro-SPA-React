@@ -11,6 +11,7 @@ export const Menu = () => {
   const [orderType, setOrderType] = useState("Dine In")
   const [customerName, setCustomerName] = useState("")
   const [customerPhone, setCustomerPhone] = useState("")
+  const [tableNumber, setTableNumber] = useState("")
 
   const handleAddToCart = (product) => {
     setCart((previousCart) => {
@@ -33,6 +34,10 @@ export const Menu = () => {
     setCart((previousCart) => {
       return previousCart.filter((item) => item.id !== productId)
     })
+  }
+
+  const handleClearCart = () => {
+    setCart([])
   }
 
   const handleUpdateQuantity = (productId, action) => {
@@ -64,12 +69,20 @@ export const Menu = () => {
           <input type="text" placeholder='Enter customer name' name='name' value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
 
           <input type="tel" placeholder='Enter Phone Number' name='phone' value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} />
+
+          {orderType === "Dine In" && <input type="text" placeholder='Enter Table Number' value={tableNumber} name='table' onChange={(e) => setTableNumber(e.target.value)} />}
         </div>
 
         <div className="order-type-selector">
           <button className={orderType === 'Dine In' ? "active" : ""} onClick={() => setOrderType("Dine In")}>Dine In</button>
-          <button className={orderType === 'Takeout' ? "active" : ""} onClick={() => setOrderType("Takeout")}>Takeout</button>
-          <button className={orderType === 'Curbside' ? "active" : ""} onClick={() => setOrderType("Curbside")}>Curbside</button>
+          <button className={orderType === 'Takeout' ? "active" : ""} onClick={() => {
+            setOrderType("Takeout")
+              setTableNumber("")
+          }}>Takeout</button>
+          <button className={orderType === 'Curbside' ? "active" : ""} onClick={() => {
+            setOrderType("Curbside")
+              setTableNumber("")
+          }}>Curbside</button>
         </div>
 
         <h1>Our Menu</h1>
@@ -93,6 +106,8 @@ export const Menu = () => {
         orderType={orderType}
         customerName={customerName}
         customerPhone={customerPhone}
+        tableNumber={tableNumber}
+        clearCart={handleClearCart}
       />
     </div>
   )

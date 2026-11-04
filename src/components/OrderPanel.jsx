@@ -1,4 +1,4 @@
-export const OrderPanel = ({ cart, onUpdateQuantity, onRemoveCart, orderType, customerName, customerPhone }) => {
+export const OrderPanel = ({ cart, onUpdateQuantity, onRemoveCart, orderType, customerName, customerPhone, tableNumber, clearCart }) => {
 
     const subtotal = cart?.reduce(
         (total, item) => total + item.price * item.qty, 0
@@ -27,6 +27,9 @@ export const OrderPanel = ({ cart, onUpdateQuantity, onRemoveCart, orderType, cu
 
                 <p>Customer: {customerName === "" ? "Not Provided" : customerName}</p>
                 <p>Phone: {customerPhone === "" ? "Not Provided" : customerPhone}</p>
+                {orderType === "Dine In" && (
+                    <p>Table Number: {tableNumber || "Not Provided"}</p>
+                )}
                 <span>{totalItems} Items</span>
             </div>
 
@@ -76,6 +79,8 @@ export const OrderPanel = ({ cart, onUpdateQuantity, onRemoveCart, orderType, cu
                             >
                                 Remove
                             </button>
+
+
 
                         </div>
                     ))
@@ -130,6 +135,10 @@ export const OrderPanel = ({ cart, onUpdateQuantity, onRemoveCart, orderType, cu
 
             <button className="charge-btn" disabled={cart?.length === 0}>
                 Charge ₹{grandTotal?.toFixed(2)}
+            </button>
+
+            <button className="clear-cart" onClick={clearCart} disabled={cart?.length === 0}>
+                Clear
             </button>
 
         </div>
