@@ -1,22 +1,6 @@
-export const OrderPanel = ({ cart, onUpdateQuantity, onRemoveCart, orderType, customerName, customerPhone, tableNumber, clearCart }) => {
+export const OrderPanel = ({ cart, onUpdateQuantity, onRemoveCart, orderType, customerName, customerPhone, tableNumber, clearCart, onPlaceOrder,subtotal,totalItems,discountAmount,discountedSubtotal,TAX,grandTotal,DISCOUNT_RATE,TAX_RATE }) => {
 
-    const subtotal = cart?.reduce(
-        (total, item) => total + item.price * item.qty, 0
-    );
-
-    const totalItems = cart?.reduce(
-        (total, item) => total + item.qty, 0
-    );
-
-    const DISCOUNT_RATE = 10;
-    const discountAmount = subtotal * (DISCOUNT_RATE / 100);
-
-    const discountedSubtotal = subtotal - discountAmount;
-
-    const TAX_RATE = 5;
-    const TAX = discountedSubtotal * (TAX_RATE / 100);
-
-    const grandTotal = discountedSubtotal + TAX;
+    
 
     return (
         <div className="order-panel">
@@ -133,7 +117,7 @@ export const OrderPanel = ({ cart, onUpdateQuantity, onRemoveCart, orderType, cu
 
             </div>
 
-            <button className="charge-btn" disabled={cart?.length === 0}>
+            <button onClick={onPlaceOrder} className="charge-btn" disabled={cart?.length === 0}>
                 Charge ₹{grandTotal?.toFixed(2)}
             </button>
 

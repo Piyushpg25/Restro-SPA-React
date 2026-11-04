@@ -12,6 +12,7 @@ export const Menu = () => {
   const [customerName, setCustomerName] = useState("")
   const [customerPhone, setCustomerPhone] = useState("")
   const [tableNumber, setTableNumber] = useState("")
+  const [orders, setOrders] = useState([])
 
   const handleAddToCart = (product) => {
     setCart((previousCart) => {
@@ -38,6 +39,45 @@ export const Menu = () => {
 
   const handleClearCart = () => {
     setCart([])
+  }
+
+  const subtotal = cart?.reduce(
+    (total, item) => total + item.price * item.qty, 0
+  );
+
+  const totalItems = cart?.reduce(
+    (total, item) => total + item.qty, 0
+  );
+
+  const DISCOUNT_RATE = 10;
+  const discountAmount = subtotal * (DISCOUNT_RATE / 100);
+
+  const discountedSubtotal = subtotal - discountAmount;
+
+  const TAX_RATE = 5;
+  const TAX = discountedSubtotal * (TAX_RATE / 100);
+
+  const grandTotal = discountedSubtotal + TAX;
+
+  const handlePlaceOrder = () => {
+    if (cart?.length === 0) {
+      alert('Please add products to your cart first!')
+      return
+    }
+    const newOrder = {
+      id: Date.now(),
+      customerName: customerName,
+      customerPhone: customerPhone,
+      orderType: orderType,
+      tableNumber: tableNumber,
+      items: cart,
+
+
+    }
+    setOrders((previousOrders) => [...previousOrders, newOrder])
+    console.log(newOrder)
+
+    console.log('Cart is ready for order placements')
   }
 
   const handleUpdateQuantity = (productId, action) => {
@@ -77,11 +117,11 @@ export const Menu = () => {
           <button className={orderType === 'Dine In' ? "active" : ""} onClick={() => setOrderType("Dine In")}>Dine In</button>
           <button className={orderType === 'Takeout' ? "active" : ""} onClick={() => {
             setOrderType("Takeout")
-              setTableNumber("")
+            setTableNumber("")
           }}>Takeout</button>
           <button className={orderType === 'Curbside' ? "active" : ""} onClick={() => {
             setOrderType("Curbside")
-              setTableNumber("")
+            setTableNumber("")
           }}>Curbside</button>
         </div>
 
@@ -108,6 +148,15 @@ export const Menu = () => {
         customerPhone={customerPhone}
         tableNumber={tableNumber}
         clearCart={handleClearCart}
+        onPlaceOrder={handlePlaceOrder}
+        subtotal={subtotal}
+        totalItems={totalItems}
+        discountAmount={discountAmount}
+        discountedSubtotal={discountedSubtotal}
+        TAX={TAX}
+        grandTotal={grandTotal}
+        DISCOUNT_RATE={DISCOUNT_RATE}
+        TAX_RATE={TAX_RATE}
       />
     </div>
   )
